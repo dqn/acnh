@@ -1,0 +1,4 @@
+github.com/dqn/go-nso v0.0.0-20200427195734-2b889b0249c8 h1:VamJvmtPM9ow3Rno41pFQBarjJfpki/+hDLosVtHDbA=
+github.com/dqn/go-nso v0.0.0-20200427195734-2b889b0249c8/go.mod h1:KSC7wLhiMVb6DofmGZk0uT0xhxL3FOrZhht5VA0XXfY=
+github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
+github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
