@@ -16,3 +16,12 @@ type Users struct {
 type UsersResponse struct {
 	Users []Users `json:"users"`
 }
+
+type AuthTokenRequest struct {
+	UserID string `json:"userId"`
+}
+
+type AuthTokenResponse struct {
+	ExpireAt int    `json:"expireAt"`
+	Token    string `json:"token"`
+}
