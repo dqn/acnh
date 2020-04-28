@@ -64,6 +64,8 @@ func TestACNH(t *testing.T) {
 		fmt.Println(r.MNormalNpc[0].Name)
 	})
 
+	var firendUserID string
+
 	t.Run("Friends", func(t *testing.T) {
 		r, err := a.Friends(token)
 		if err != nil {
@@ -71,6 +73,7 @@ func TestACNH(t *testing.T) {
 		}
 		fmt.Println(r.Friends[0].Name)
 		fmt.Println(r.Friends[0].Land.Name)
+		firendUserID = r.Friends[0].UserID
 	})
 
 	t.Run("PresenceFriends", func(t *testing.T) {
@@ -83,6 +86,14 @@ func TestACNH(t *testing.T) {
 
 	t.Run("SendMessageAll", func(t *testing.T) {
 		r, err := a.SendMessageAll(token, "Hello!")
+		if err != nil {
+			t.Fatal(err)
+		}
+		fmt.Println(r.Status)
+	})
+
+	t.Run("SendMessageFriend", func(t *testing.T) {
+		r, err := a.SendMessageFriend(token, firendUserID, "Hello!")
 		if err != nil {
 			t.Fatal(err)
 		}

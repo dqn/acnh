@@ -108,8 +108,9 @@ type PresenceFriendsResponse struct {
 }
 
 type SendMessageRequest struct {
-	Body string `json:"body"`
-	Type string `json:"type"`
+	Body   string `json:"body"`
+	Type   string `json:"type"`
+	UserID string `json:"userId"`
 }
 
 type SendMessageResponse struct {

@@ -238,3 +238,19 @@ func (a *ACNH) SendMessageAll(token, message string) (*SendMessageResponse, erro
 
 	return r, nil
 }
+
+func (a *ACNH) SendMessageFriend(token, userID, message string) (*SendMessageResponse, error) {
+	body := &SendMessageRequest{
+		Body:   message,
+		Type:   "friend",
+		UserID: userID,
+	}
+	r, err := a.sendMessage(token, body)
+	if err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}
+
+// keyboard
