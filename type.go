@@ -14,7 +14,7 @@ type Land struct {
 	Name      string `json:"name"`
 }
 
-type Users struct {
+type User struct {
 	ID    string `json:"id"`
 	Image string `json:"image"`
 	Land  Land   `json:"land"`
@@ -22,8 +22,8 @@ type Users struct {
 }
 
 type UsersResponse struct {
-	Users []Users `json:"users"`
-	Code  code    `json:"code"`
+	Users []User `json:"users"`
+	Code  code   `json:"code"`
 }
 
 type AuthTokenRequest struct {
@@ -90,7 +90,7 @@ type LandProfileResponse struct {
 	Code       code         `json:"code"`
 }
 
-type Friends struct {
+type Friend struct {
 	Image  string `json:"image"`
 	Land   Land   `json:"land"`
 	Name   string `json:"name"`
@@ -98,13 +98,13 @@ type Friends struct {
 }
 
 type FriendsResponse struct {
-	Friends []Friends `json:"friends"`
-	Code    code      `json:"code"`
+	Friends []Friend `json:"friends"`
+	Code    code     `json:"code"`
 }
 
 type PresenceFriendsResponse struct {
-	Presences []Friends `json:"presences"`
-	Code      code      `json:"code"`
+	Presences []Friend `json:"presences"`
+	Code      code     `json:"code"`
 }
 
 type SendMessageRequest struct {
