@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"net/http"
 	"net/http/cookiejar"
@@ -16,11 +15,6 @@ const host = "web.sd.lp1.acbaa.srv.nintendo.net"
 type ACNH struct {
 	client      *http.Client
 	accessToken string
-}
-
-type ACNHUser struct {
-	client *http.Client
-	token  string
 }
 
 func New(accessToken string) (*ACNH, error) {
@@ -43,26 +37,13 @@ func New(accessToken string) (*ACNH, error) {
 	return &ACNH{client, accessToken}, nil
 }
 
-func (a *ACNH) request(method, path string, body interface{}) ([]byte, error) {
-	var reader io.Reader
-	if body != nil {
-		rawJSON, err := json.Marshal(body)
-		if err != nil {
-			return nil, err
-		}
-		reader = bytes.NewBuffer(rawJSON)
-	}
-
-	req, err := http.NewRequest(method, fmt.Sprintf("https://%s/%s", host, path), reader)
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Set("Content-Type", "application/json")
-
+func (a *ACNH) processRequest(req *http.Request) ([]byte, error) {
 	resp, err := a.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer resp.Body.Close()
+
 	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
@@ -72,8 +53,51 @@ func (a *ACNH) request(method, path string, body interface{}) ([]byte, error) {
 	return b, nil
 }
 
+func (a *ACNH) get(path string, values *url.Values, token string) ([]byte, error) {
+	u := fmt.Sprintf("https://%s/%s", host, path)
+	req, err := http.NewRequest("GET", u, nil)
+	if err != nil {
+		return nil, err
+	}
+	if values != nil {
+		req.URL.RawQuery = values.Encode()
+	}
+	if token != "" {
+		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
+	}
+	b, err := a.processRequest(req)
+	if err != nil {
+		return nil, err
+	}
+
+	return b, nil
+}
+
+func (a *ACNH) post(path string, body interface{}, token string) ([]byte, error) {
+	rawJSON, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+
+	u := fmt.Sprintf("https://%s/%s", host, path)
+	req, err := http.NewRequest("POST", u, bytes.NewBuffer(rawJSON))
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	if token != "" {
+		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
+	}
+	b, err := a.processRequest(req)
+	if err != nil {
+		return nil, err
+	}
+
+	return b, nil
+}
+
 func (a *ACNH) Users() (*UsersResponse, error) {
-	b, err := a.request("GET", "api/sd/v1/users", nil)
+	b, err := a.get("api/sd/v1/users", nil, "")
 	if err != nil {
 		return nil, err
 	}
@@ -82,12 +106,15 @@ func (a *ACNH) Users() (*UsersResponse, error) {
 	if err = json.Unmarshal(b, &r); err != nil {
 		return nil, err
 	}
+	if r.Code != "" {
+		return nil, r.Code.Error()
+	}
 
 	return &r, nil
 }
 
-func (a *ACNH) NewACNHUser(userID string) (*ACNHUser, error) {
-	b, err := a.request("POST", "api/sd/v1/auth_token", &AuthTokenRequest{userID})
+func (a *ACNH) AuthToken(userID string) (*AuthTokenResponse, error) {
+	b, err := a.post("api/sd/v1/auth_token", &AuthTokenRequest{userID}, "")
 	if err != nil {
 		return nil, err
 	}
@@ -96,9 +123,33 @@ func (a *ACNH) NewACNHUser(userID string) (*ACNHUser, error) {
 	if err = json.Unmarshal(b, &r); err != nil {
 		return nil, err
 	}
+	if r.Code != "" {
+		return nil, r.Code.Error()
+	}
 	if r.Token == "" {
 		return nil, fmt.Errorf("failed to fetch token")
 	}
 
-	return &ACNHUser{&http.Client{}, r.Token}, nil
+	return &r, nil
+}
+
+func (a *ACNH) LandsProfile(token, landID string) (*LandsProfileResponse, error) {
+	path := fmt.Sprintf("/api/sd/v1/lands/%s/profile", landID)
+	values := &url.Values{
+		"language": {"ja-JP"},
+	}
+	b, err := a.get(path, values, token)
+	if err != nil {
+		return nil, err
+	}
+
+	var r LandsProfileResponse
+	if err = json.Unmarshal(b, &r); err != nil {
+		return nil, err
+	}
+	if r.Code != "" {
+		return nil, r.Code.Error()
+	}
+
+	return &r, nil
 }
