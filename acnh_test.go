@@ -80,4 +80,12 @@ func TestACNH(t *testing.T) {
 		}
 		fmt.Println(len(r.Presences))
 	})
+
+	t.Run("SendMessageAll", func(t *testing.T) {
+		r, err := a.SendMessageAll(token, "Hello!")
+		if err != nil {
+			t.Fatal(err)
+		}
+		fmt.Println(r.Status)
+	})
 }

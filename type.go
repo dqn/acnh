@@ -106,3 +106,13 @@ type PresenceFriendsResponse struct {
 	Presences []Friends `json:"presences"`
 	Code      code      `json:"code"`
 }
+
+type SendMessageRequest struct {
+	Body string `json:"body"`
+	Type string `json:"type"`
+}
+
+type SendMessageResponse struct {
+	Status string `json:"status"`
+	Code   code   `json:"code"`
+}

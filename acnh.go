@@ -208,3 +208,33 @@ func (a *ACNH) PresenceFriends(token string) (*PresenceFriendsResponse, error) {
 
 	return &r, nil
 }
+
+func (a *ACNH) sendMessage(token string, body *SendMessageRequest) (*SendMessageResponse, error) {
+	b, err := a.post("/api/sd/v1/messages", body, token)
+	if err != nil {
+		return nil, err
+	}
+
+	var r SendMessageResponse
+	if err = json.Unmarshal(b, &r); err != nil {
+		return nil, err
+	}
+	if r.Code != "" {
+		return nil, r.Code.Error()
+	}
+
+	return &r, nil
+}
+
+func (a *ACNH) SendMessageAll(token, message string) (*SendMessageResponse, error) {
+	body := &SendMessageRequest{
+		Body: message,
+		Type: "all_friend",
+	}
+	r, err := a.sendMessage(token, body)
+	if err != nil {
+		return nil, err
+	}
+
+	return r, nil
+}
