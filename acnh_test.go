@@ -63,4 +63,13 @@ func TestACNH(t *testing.T) {
 		fmt.Println(r.MFruit.Name)
 		fmt.Println(r.MNormalNpc[0].Name)
 	})
+
+	t.Run("Friends", func(t *testing.T) {
+		r, err := a.Friends(token)
+		if err != nil {
+			t.Fatal(err)
+		}
+		fmt.Println(r.Friends[0].Name)
+		fmt.Println(r.Friends[0].Land.Name)
+	})
 }

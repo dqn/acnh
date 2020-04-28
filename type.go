@@ -89,3 +89,15 @@ type LandProfileResponse struct {
 	MVillager  []MVillager  `json:"mVillager"`
 	Code       code         `json:"code"`
 }
+
+type Friends struct {
+	Image  string `json:"image"`
+	Land   Land   `json:"land"`
+	Name   string `json:"name"`
+	UserID string `json:"userId"`
+}
+
+type FriendsResponse struct {
+	Friends []Friends `json:"friends"`
+	Code    code      `json:"code"`
+}

@@ -174,3 +174,20 @@ func (a *ACNH) LandProfile(token, landID string) (*LandProfileResponse, error) {
 
 	return &r, nil
 }
+
+func (a *ACNH) Friends(token string) (*FriendsResponse, error) {
+	b, err := a.get("/api/sd/v1/friends", nil, token)
+	if err != nil {
+		return nil, err
+	}
+
+	var r FriendsResponse
+	if err = json.Unmarshal(b, &r); err != nil {
+		return nil, err
+	}
+	if r.Code != "" {
+		return nil, r.Code.Error()
+	}
+
+	return &r, nil
+}
