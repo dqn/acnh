@@ -46,8 +46,17 @@ func TestACNH(t *testing.T) {
 		token = r.Token
 	})
 
-	t.Run("LandsProfile", func(t *testing.T) {
-		r, err := a.LandsProfile(token, landID)
+	t.Run("UserProfile", func(t *testing.T) {
+		r, err := a.UserProfile(token, userID)
+		if err != nil {
+			t.Fatal(err)
+		}
+		fmt.Println(r.MHandleName)
+		fmt.Println(r.MComment)
+	})
+
+	t.Run("LandProfile", func(t *testing.T) {
+		r, err := a.LandProfile(token, landID)
 		if err != nil {
 			t.Fatal(err)
 		}

@@ -133,7 +133,28 @@ func (a *ACNH) AuthToken(userID string) (*AuthTokenResponse, error) {
 	return &r, nil
 }
 
-func (a *ACNH) LandsProfile(token, landID string) (*LandsProfileResponse, error) {
+func (a *ACNH) UserProfile(token, userID string) (*UserProfileResponse, error) {
+	path := fmt.Sprintf("/api/sd/v1/users/%s/profile", userID)
+	values := &url.Values{
+		"language": {"ja-JP"},
+	}
+	b, err := a.get(path, values, token)
+	if err != nil {
+		return nil, err
+	}
+
+	var r UserProfileResponse
+	if err = json.Unmarshal(b, &r); err != nil {
+		return nil, err
+	}
+	if r.Code != "" {
+		return nil, r.Code.Error()
+	}
+
+	return &r, nil
+}
+
+func (a *ACNH) LandProfile(token, landID string) (*LandProfileResponse, error) {
 	path := fmt.Sprintf("/api/sd/v1/lands/%s/profile", landID)
 	values := &url.Values{
 		"language": {"ja-JP"},
@@ -143,7 +164,7 @@ func (a *ACNH) LandsProfile(token, landID string) (*LandsProfileResponse, error)
 		return nil, err
 	}
 
-	var r LandsProfileResponse
+	var r LandProfileResponse
 	if err = json.Unmarshal(b, &r); err != nil {
 		return nil, err
 	}

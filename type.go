@@ -35,6 +35,33 @@ type AuthTokenResponse struct {
 	Token    string `json:"token"`
 	Code     code   `json:"code"`
 }
+type MBirth struct {
+	Day   int `json:"day"`
+	Month int `json:"month"`
+}
+type MTimeStamp struct {
+	Day   int `json:"day"`
+	Month int `json:"month"`
+	Year  int `json:"year"`
+}
+
+type UserProfileResponse struct {
+	ContentID         string     `json:"contentId"`
+	CreatedAt         int        `json:"createdAt"`
+	Digest            string     `json:"digest"`
+	LandName          string     `json:"landName"`
+	MBirth            MBirth     `json:"mBirth"`
+	MComment          string     `json:"mComment"`
+	MHandleName       string     `json:"mHandleName"`
+	MIsLandMaster     bool       `json:"mIsLandMaster"`
+	MJpeg             string     `json:"mJpeg"`
+	MLanguage         string     `json:"mLanguage"`
+	MMyDesignAuthorID string     `json:"mMyDesignAuthorId"`
+	MPNm              string     `json:"mPNm"`
+	MTimeStamp        MTimeStamp `json:"mTimeStamp"`
+	MVer              int        `json:"mVer"`
+	Code              code       `json:"code"`
+}
 
 type MFruit struct {
 	ID   int    `json:"id"`
@@ -52,7 +79,7 @@ type MVillager struct {
 	UserID string `json:"userId"`
 }
 
-type LandsProfileResponse struct {
+type LandProfileResponse struct {
 	MFruit     MFruit       `json:"mFruit"`
 	MLanguage  string       `json:"mLanguage"`
 	MNormalNpc []MNormalNpc `json:"mNormalNpc"`
