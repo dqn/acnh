@@ -99,4 +99,12 @@ func TestACNH(t *testing.T) {
 		}
 		fmt.Println(r.Status)
 	})
+
+	t.Run("SendMessageKeyboard", func(t *testing.T) {
+		r, err := a.SendMessageKeyboard(token, "Hello!")
+		if err != nil {
+			t.Fatal(err)
+		}
+		fmt.Println(r.Status)
+	})
 }
