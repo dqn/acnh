@@ -253,7 +253,7 @@ func (a *ACNH) SendMessageFriend(token, userID, message string) (*SendMessageRes
 	return r, nil
 }
 
-func (a *ACNH) SendMessageKeyboard(token, message string) (*SendMessageResponse, error) {
+func (a *ACNH) SendMessageLocal(token, message string) (*SendMessageResponse, error) {
 	body := &SendMessageRequest{
 		Body: message,
 		Type: "keyboard",

@@ -100,8 +100,8 @@ func TestACNH(t *testing.T) {
 		fmt.Println(r.Status)
 	})
 
-	t.Run("SendMessageKeyboard", func(t *testing.T) {
-		r, err := a.SendMessageKeyboard(token, "Hello!")
+	t.Run("SendMessageLocal", func(t *testing.T) {
+		r, err := a.SendMessageLocal(token, "Hello!")
 		if err != nil {
 			t.Fatal(err)
 		}
