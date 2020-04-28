@@ -191,3 +191,20 @@ func (a *ACNH) Friends(token string) (*FriendsResponse, error) {
 
 	return &r, nil
 }
+
+func (a *ACNH) PresenceFriends(token string) (*PresenceFriendsResponse, error) {
+	b, err := a.get("/api/sd/v1/friends/presences", nil, token)
+	if err != nil {
+		return nil, err
+	}
+
+	var r PresenceFriendsResponse
+	if err = json.Unmarshal(b, &r); err != nil {
+		return nil, err
+	}
+	if r.Code != "" {
+		return nil, r.Code.Error()
+	}
+
+	return &r, nil
+}

@@ -72,4 +72,12 @@ func TestACNH(t *testing.T) {
 		fmt.Println(r.Friends[0].Name)
 		fmt.Println(r.Friends[0].Land.Name)
 	})
+
+	t.Run("PresenceFriends", func(t *testing.T) {
+		r, err := a.PresenceFriends(token)
+		if err != nil {
+			t.Fatal(err)
+		}
+		fmt.Println(len(r.Presences))
+	})
 }

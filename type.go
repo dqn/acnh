@@ -101,3 +101,8 @@ type FriendsResponse struct {
 	Friends []Friends `json:"friends"`
 	Code    code      `json:"code"`
 }
+
+type PresenceFriendsResponse struct {
+	Presences []Friends `json:"presences"`
+	Code      code      `json:"code"`
+}
