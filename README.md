@@ -36,7 +36,7 @@ func main() {
 }
 ```
 
-You can get `accessToken` by using [go-nso](https://github.com/dqn/go-nso).
+You can get `accessToken` by using [gonso](https://github.com/dqn/gonso).
 
 ## API
 
@@ -125,3 +125,7 @@ Send message local.
 ### Response type details
 
 See [type.go](type.go).
+
+## License
+
+MIT
