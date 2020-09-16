@@ -107,7 +107,7 @@ func (a *ACNH) Users() (*UsersResponse, error) {
 		return nil, err
 	}
 	if r.Code != "" {
-		return nil, r.Code.Error()
+		return nil, r.Code
 	}
 
 	return &r, nil
@@ -124,7 +124,7 @@ func (a *ACNH) AuthToken(userID string) (*AuthTokenResponse, error) {
 		return nil, err
 	}
 	if r.Code != "" {
-		return nil, r.Code.Error()
+		return nil, r.Code
 	}
 	if r.Token == "" {
 		return nil, fmt.Errorf("failed to fetch token")
@@ -148,7 +148,7 @@ func (a *ACNH) UserProfile(token, userID string) (*UserProfileResponse, error) {
 		return nil, err
 	}
 	if r.Code != "" {
-		return nil, r.Code.Error()
+		return nil, r.Code
 	}
 
 	return &r, nil
@@ -169,7 +169,7 @@ func (a *ACNH) LandProfile(token, landID string) (*LandProfileResponse, error) {
 		return nil, err
 	}
 	if r.Code != "" {
-		return nil, r.Code.Error()
+		return nil, r.Code
 	}
 
 	return &r, nil
@@ -186,7 +186,7 @@ func (a *ACNH) Friends(token string) (*FriendsResponse, error) {
 		return nil, err
 	}
 	if r.Code != "" {
-		return nil, r.Code.Error()
+		return nil, r.Code
 	}
 
 	return &r, nil
@@ -203,7 +203,7 @@ func (a *ACNH) PresenceFriends(token string) (*PresenceFriendsResponse, error) {
 		return nil, err
 	}
 	if r.Code != "" {
-		return nil, r.Code.Error()
+		return nil, r.Code
 	}
 
 	return &r, nil
@@ -220,7 +220,7 @@ func (a *ACNH) sendMessage(token string, body *SendMessageRequest) (*SendMessage
 		return nil, err
 	}
 	if r.Code != "" {
-		return nil, r.Code.Error()
+		return nil, r.Code
 	}
 
 	return &r, nil
