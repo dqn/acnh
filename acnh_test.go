@@ -2,13 +2,14 @@ package acnh
 
 import (
 	"fmt"
+	"os"
 	"testing"
 
-	"github.com/dqn/go-nso"
+	"github.com/dqn/gonso"
 )
 
 func TestACNH(t *testing.T) {
-	accessToken, err := nso.New().Auth()
+	accessToken, err := gonso.Auth(os.Getenv("SESSION_TOKEN"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -64,7 +65,7 @@ func TestACNH(t *testing.T) {
 		fmt.Println(r.MNormalNpc[0].Name)
 	})
 
-	var firendUserID string
+	// var firendUserID string
 
 	t.Run("Friends", func(t *testing.T) {
 		r, err := a.Friends(token)
@@ -73,7 +74,7 @@ func TestACNH(t *testing.T) {
 		}
 		fmt.Println(r.Friends[0].Name)
 		fmt.Println(r.Friends[0].Land.Name)
-		firendUserID = r.Friends[0].UserID
+		// firendUserID = r.Friends[0].UserID
 	})
 
 	t.Run("PresenceFriends", func(t *testing.T) {
@@ -84,27 +85,27 @@ func TestACNH(t *testing.T) {
 		fmt.Println(len(r.Presences))
 	})
 
-	t.Run("SendMessageAll", func(t *testing.T) {
-		r, err := a.SendMessageAll(token, "Hello!")
-		if err != nil {
-			t.Fatal(err)
-		}
-		fmt.Println(r.Status)
-	})
+	// t.Run("SendMessageAll", func(t *testing.T) {
+	// 	r, err := a.SendMessageAll(token, "Hello!")
+	// 	if err != nil {
+	// 		t.Fatal(err)
+	// 	}
+	// 	fmt.Println(r.Status)
+	// })
 
-	t.Run("SendMessageFriend", func(t *testing.T) {
-		r, err := a.SendMessageFriend(token, firendUserID, "Hello!")
-		if err != nil {
-			t.Fatal(err)
-		}
-		fmt.Println(r.Status)
-	})
+	// t.Run("SendMessageFriend", func(t *testing.T) {
+	// 	r, err := a.SendMessageFriend(token, firendUserID, "Hello!")
+	// 	if err != nil {
+	// 		t.Fatal(err)
+	// 	}
+	// 	fmt.Println(r.Status)
+	// })
 
-	t.Run("SendMessageLocal", func(t *testing.T) {
-		r, err := a.SendMessageLocal(token, "Hello!")
-		if err != nil {
-			t.Fatal(err)
-		}
-		fmt.Println(r.Status)
-	})
+	// t.Run("SendMessageLocal", func(t *testing.T) {
+	// 	r, err := a.SendMessageLocal(token, "Hello!")
+	// 	if err != nil {
+	// 		t.Fatal(err)
+	// 	}
+	// 	fmt.Println(r.Status)
+	// })
 }

@@ -1,5 +1,5 @@
 module github.com/dqn/acnh
 
-go 1.14
+go 1.15
 
-require github.com/dqn/go-nso v1.0.2
+require github.com/dqn/gonso v1.0.2
