@@ -1,6 +1,8 @@
 # acnh
 
-Animal Crossing: New Horizons API
+[![build status](https://github.com/dqn/acnh/workflows/build/badge.svg)](https://github.com/dqn/acnh/actions)
+
+Animal Crossing: New Horizons API wrapper.
 
 ## Installation
 
@@ -17,26 +19,28 @@ import (
 	"fmt"
 
 	"github.com/dqn/acnh"
-	"github.com/dqn/go-nso"
+	"github.com/dqn/gonso"
 )
 
 func main() {
-	accessToken, _ := nso.New().Auth()
+	accessToken, _ := gonso.Auth("SESSION_TOKEN")
 	a, err := acnh.New(accessToken)
 	if err != nil {
-		panic(err)
+		// Handle error.
 	}
 
 	r, err := a.Users()
 	if err != nil {
-		panic(err)
+		// Handle error.
 	}
 
-	fmt.Println(r.Users[0].Name) // => どきゅん
+	for _, user := range r.Users {
+		fmt.Println(user)
+	}
 }
 ```
 
-You can get `accessToken` by using [gonso](https://github.com/dqn/gonso).
+You can get session token and access token by using [gonso](https://github.com/dqn/gonso).
 
 ## API
 
