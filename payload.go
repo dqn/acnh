@@ -1,11 +1,9 @@
 package acnh
 
-import "fmt"
-
 type code string
 
-func (c *code) Error() error {
-	return fmt.Errorf("nso api error: %s", *c)
+func (c code) Error() string {
+	return "nso api error: " + string(c)
 }
 
 type Land struct {
